@@ -1,0 +1,5 @@
+{
+  "title": "Draft FIR - Road Traffic Accident",
+  "fields": ["name", "vehicle_number", "other_vehicle_number", "date_time", "location", "description"],
+  "format": "To The Station House Officer,\nI, {{name}}, report a road traffic accident involving vehicle {{vehicle_number}} and {{other_vehicle_number}} at {{location}} on {{date_time}}.\n\nDescription:\n{{description}}\n\nGPS coordinates and evidence package hash are attached for verification."
+}

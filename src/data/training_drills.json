@@ -1,0 +1,90 @@
+{
+  "drills": [
+    {
+      "id": "cpr1",
+      "category": "CPR",
+      "question": "What is the correct compression rate for adult CPR?",
+      "options": ["60-80 BPM", "80-100 BPM", "100-120 BPM", "120-140 BPM"],
+      "correct": 2,
+      "explanation": "The AHA recommends 100-120 compressions per minute for adult CPR. Faster than that reduces recoil, slower reduces blood flow."
+    },
+    {
+      "id": "cpr2",
+      "category": "CPR",
+      "question": "How deep should chest compressions be for an adult?",
+      "options": ["2-3 cm", "4-5 cm", "5-6 cm", "7-8 cm"],
+      "correct": 2,
+      "explanation": "Compress to a depth of 5-6 cm (2-2.4 inches). Allow full chest recoil between compressions."
+    },
+    {
+      "id": "bleed1",
+      "category": "Bleeding",
+      "question": "What is the first step when you encounter severe bleeding?",
+      "options": ["Apply a tourniquet", "Apply direct pressure with a clean cloth", "Elevate the limb above heart", "Pour water to clean the wound"],
+      "correct": 1,
+      "explanation": "Apply direct pressure with a clean cloth first. Tourniquets are only used when direct pressure fails or is impractical."
+    },
+    {
+      "id": "bleed2",
+      "category": "Bleeding",
+      "question": "Where should a tourniquet be placed?",
+      "options": ["Directly on the wound", "Below the wound (further from heart)", "2-3 inches above the wound", "On the nearest joint"],
+      "correct": 2,
+      "explanation": "Place the tourniquet 2-3 inches above the wound, between the wound and the heart. Never place on a joint."
+    },
+    {
+      "id": "fracture1",
+      "category": "Fractures",
+      "question": "What should you NEVER do with a suspected spinal injury?",
+      "options": ["Call for help", "Keep them still", "Move them to a safer location", "Talk to them reassuringly"],
+      "correct": 2,
+      "explanation": "NEVER move a person with a suspected spinal injury unless there is immediate danger (fire, flood). Movement can cause permanent paralysis."
+    },
+    {
+      "id": "burn1",
+      "category": "Burns",
+      "question": "How long should you cool a burn with running water?",
+      "options": ["1-2 minutes", "5 minutes", "10-20 minutes", "30+ minutes"],
+      "correct": 2,
+      "explanation": "Cool burns with running cool (not ice-cold) water for 10-20 minutes. This reduces tissue damage and pain."
+    },
+    {
+      "id": "choke1",
+      "category": "Choking",
+      "question": "When performing the Heimlich manoeuvre, where should you place your fist?",
+      "options": ["On the chest", "Above the navel, below the ribcage", "On the ribcage", "On the lower abdomen"],
+      "correct": 1,
+      "explanation": "Place your fist just above the navel and well below the breastbone. Thrust inward and upward."
+    },
+    {
+      "id": "shock1",
+      "category": "Shock",
+      "question": "Which position helps a person in shock (if no spinal injury)?",
+      "options": ["Sitting upright", "Legs elevated 30cm, lying flat", "Recovery position (on their side)", "Standing with support"],
+      "correct": 1,
+      "explanation": "Elevate the legs about 30cm while lying flat to help blood flow to vital organs. Keep them warm with a blanket."
+    },
+    {
+      "id": "uncon1",
+      "category": "Unconscious",
+      "question": "An unconscious person is breathing. What position should you put them in?",
+      "options": ["Flat on their back", "Sitting up", "Recovery position (on their side)", "Face down"],
+      "correct": 2,
+      "explanation": "The recovery position keeps the airway clear and prevents choking on vomit. Roll them onto their side with the top leg bent."
+    },
+    {
+      "id": "spinal1",
+      "category": "Spinal",
+      "question": "What is the key instruction for stabilising a potential spinal injury?",
+      "options": ["Tilt their head back", "Roll them to check for injuries", "Hold their head still in the position found", "Sit them upright carefully"],
+      "correct": 2,
+      "explanation": "Hold the head still in the position found and wait for medical professionals. Manually stabilise the head and neck."
+    }
+  ],
+  "badges": {
+    "streak7": { "name": "Basic Trained", "icon": "🛡️", "requirement": "7-day drill streak" },
+    "streak30": { "name": "First Responder Ready", "icon": "⭐", "requirement": "30-day drill streak" },
+    "cprCertified": { "name": "CPR Certified", "icon": "❤️", "requirement": "3 consecutive CPR tester passes" },
+    "scenarioMaster": { "name": "Scenario Master", "icon": "🏆", "requirement": "Complete 10 AI scenarios with 80%+ score" }
+  }
+}

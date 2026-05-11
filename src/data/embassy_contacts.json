@@ -1,0 +1,33 @@
+{
+  "embassies": {
+    "IN_in_US": { "name": "Embassy of India, Washington DC", "emergency": "+1-202-939-7000", "address": "2107 Massachusetts Ave NW, Washington DC" },
+    "IN_in_UK": { "name": "High Commission of India, London", "emergency": "+44-20-7836-8484", "address": "India House, Aldwych, London WC2B 4NA" },
+    "IN_in_DE": { "name": "Embassy of India, Berlin", "emergency": "+49-30-257950", "address": "Tiergartenstr. 17, 10785 Berlin" },
+    "IN_in_FR": { "name": "Embassy of India, Paris", "emergency": "+33-1-4050-7070", "address": "15 Rue Alfred Dehodencq, 75016 Paris" },
+    "IN_in_JP": { "name": "Embassy of India, Tokyo", "emergency": "+81-3-3262-2391", "address": "2-2-11 Kudan-Minami, Chiyoda-ku, Tokyo" },
+    "IN_in_AU": { "name": "High Commission of India, Canberra", "emergency": "+61-2-6273-3999", "address": "3-5 Moonah Pl, Yarralumla ACT 2600" },
+    "IN_in_AE": { "name": "Embassy of India, Abu Dhabi", "emergency": "+971-2-449-2700", "address": "Plot No. 10, Sector W-59/02, Abu Dhabi" },
+    "US_in_IN": { "name": "US Embassy, New Delhi", "emergency": "+91-11-2419-8000", "address": "Shantipath, Chanakyapuri, New Delhi" },
+    "UK_in_IN": { "name": "British High Commission, New Delhi", "emergency": "+91-11-2419-2100", "address": "Shantipath, Chanakyapuri, New Delhi" },
+    "US_in_UK": { "name": "US Embassy, London", "emergency": "+44-20-7499-9000", "address": "33 Nine Elms Lane, London SW11 7US" },
+    "UK_in_US": { "name": "British Embassy, Washington DC", "emergency": "+1-202-588-6500", "address": "3100 Massachusetts Ave NW, Washington DC" }
+  },
+  "emergencyNumbers": {
+    "US": { "police": "911", "ambulance": "911", "fire": "911" },
+    "UK": { "police": "999", "ambulance": "999", "fire": "999", "alt": "112" },
+    "IN": { "police": "100", "ambulance": "108", "fire": "101", "women": "1091" },
+    "DE": { "police": "110", "ambulance": "112", "fire": "112" },
+    "FR": { "police": "17", "ambulance": "15", "fire": "18", "eu": "112" },
+    "JP": { "police": "110", "ambulance": "119", "fire": "119" },
+    "AU": { "police": "000", "ambulance": "000", "fire": "000" },
+    "AE": { "police": "999", "ambulance": "998", "fire": "997" }
+  },
+  "hospitalGuides": {
+    "US": { "dept": "Emergency Room (ER)", "say": "I was in a car accident.", "tip": "Go to the ER entrance, NOT the main lobby. You will be triaged." },
+    "UK": { "dept": "Accident & Emergency (A&E)", "say": "I've been in a road accident.", "tip": "Out of hours: urgent treatment centres (UTC) are separate from A&E." },
+    "DE": { "dept": "Notaufnahme", "say": "Notfall (NOT-fal)", "tip": "Show this word to staff: Notaufnahme = Emergency department." },
+    "FR": { "dept": "Urgences", "say": "Urgences (oor-ZHONSS)", "tip": "SAMU = 15 for emergency medical. Pompiers = 18 for fire/rescue." },
+    "JP": { "dept": "救急 (kyūkyū)", "say": "Kyūkyū desu (kyu-kyu DES)", "tip": "Show this kanji to staff: 救急 = Emergency" },
+    "IN": { "dept": "Casualty / Emergency", "say": "Road accident emergency", "tip": "Government hospitals must treat accident victims without advance payment (MV Act)." }
+  }
+}

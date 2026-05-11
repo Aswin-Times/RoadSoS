@@ -1,0 +1,55 @@
+{
+  "en": {
+    "categories": [
+      {
+        "id": "cpr",
+        "title": "CPR (Heart Stopped)",
+        "icon": "heart",
+        "color": "#E8361A",
+        "steps": [
+          { "time": "0:05", "text": "Check response: Shake shoulders and shout 'Are you okay?'" },
+          { "time": "0:10", "text": "If no response, tilt head back and lift chin to open airway." },
+          { "time": "0:10", "text": "Check breathing: Look, listen, and feel for normal breathing for 10 seconds." },
+          { "time": "0:05", "text": "If NOT breathing normally, call emergency services immediately." },
+          { "time": "Ongoing", "text": "Start CPR: Place hands in center of chest. Push hard and fast (100-120 beats/min, 2 inches deep)." }
+        ]
+      },
+      {
+        "id": "bleeding",
+        "title": "Severe Bleeding",
+        "icon": "droplet",
+        "color": "#EF4444",
+        "steps": [
+          { "time": "0:05", "text": "Apply direct pressure to the wound using a clean cloth or hands." },
+          { "time": "Ongoing", "text": "Maintain pressure constantly. Do NOT remove the cloth if it soaks through; add more layers." },
+          { "time": "0:15", "text": "If bleeding is from a limb, elevate it above the heart if possible." },
+          { "time": "0:30", "text": "If bleeding doesn't stop, apply a tourniquet 2-3 inches above the wound (not on a joint)." }
+        ]
+      },
+      {
+        "id": "unconscious",
+        "title": "Unconscious (Breathing)",
+        "icon": "user",
+        "color": "#3B82F6",
+        "steps": [
+          { "time": "0:10", "text": "Ensure the person is breathing normally." },
+          { "time": "0:30", "text": "Place them in the Recovery Position: roll them onto their side, support head, bend top leg." },
+          { "time": "0:05", "text": "Call emergency services." },
+          { "time": "Ongoing", "text": "Monitor breathing constantly until help arrives." }
+        ]
+      },
+      {
+        "id": "fracture",
+        "title": "Fracture / Broken Bone",
+        "icon": "bone",
+        "color": "#F59E0B",
+        "steps": [
+          { "time": "0:05", "text": "Do NOT move the injured person unless they are in immediate danger." },
+          { "time": "0:30", "text": "Immobilize the injured area. Use a splint if trained, otherwise keep it supported." },
+          { "time": "0:15", "text": "Apply a cold pack wrapped in cloth to reduce swelling." },
+          { "time": "0:05", "text": "Call for medical help." }
+        ]
+      }
+    ]
+  }
+}

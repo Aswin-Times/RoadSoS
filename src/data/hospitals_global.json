@@ -1,0 +1,5 @@
+[
+  { "id": "us-bellevue", "name": "Bellevue Hospital", "country": "US", "lat": 40.7396, "lng": -73.9763, "specialisations": ["trauma"], "has_trauma": true },
+  { "id": "uk-st-marys", "name": "St Mary's Hospital", "country": "UK", "lat": 51.5172, "lng": -0.1739, "specialisations": ["major trauma"], "has_trauma": true },
+  { "id": "sg-sgh", "name": "Singapore General Hospital", "country": "SG", "lat": 1.2794, "lng": 103.8344, "specialisations": ["trauma"], "has_trauma": true }
+]

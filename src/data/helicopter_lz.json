@@ -1,0 +1,4 @@
+[
+  { "city": "New Delhi", "name": "Open sports ground", "lat": 28.611, "lng": 77.229, "size_m": "40x55" },
+  { "city": "Mumbai", "name": "Parking field", "lat": 19.05, "lng": 72.86, "size_m": "35x45" }
+]

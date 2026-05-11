@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-emergency: #E8361A;
+  --color-emergency-hover: #C42D15;
+  --color-emergency-muted: #3D1510;
+  
+  --color-warning: #F59E0B;
+  --color-warning-muted: #2D1F05;
+  
+  --color-safe: #22C55E;
+  --color-safe-muted: #0A2415;
+  
+  --color-asphalt-900: #070708;
+  --color-asphalt-800: #0A0A0B;
+  --color-asphalt-700: #111113;
+  --color-asphalt-600: #141416;
+  --color-asphalt-500: #1C1C20;
+  --color-asphalt-400: #242428;
+  --color-asphalt-300: #2E2E34;
+  
+  --color-smoke-100: #F0EDE8;
+  --color-smoke-200: #C4BFB9;
+  --color-smoke-300: #8A8480;
+  --color-smoke-400: #5A5652;
+  --color-smoke-500: #3A3733;
+
+  /* Typography */
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Spacing */
+  --spacing-touch: 48px;
+  --spacing-gutter: 20px;
+  --spacing-card-pad: 16px;
+
+  /* Border Radius */
+  --radius-sharp: 4px;
+  --radius-card: 12px;
+  --radius-pill: 9999px;
+
+  /* Shadows (Glow System) */
+  --shadow-glow-red: 0 0 0 1px rgba(232,54,26,0.3), 0 0 16px rgba(232,54,26,0.15);
+  --shadow-glow-red-strong: 0 0 0 2px rgba(232,54,26,0.6), 0 0 32px rgba(232,54,26,0.25);
+  --shadow-glow-green: 0 0 0 1px rgba(34,197,94,0.3), 0 0 12px rgba(34,197,94,0.12);
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.4), 0 0 0 0.5px rgba(255,255,255,0.06);
+
+  /* Compatibility aliases for existing JSX during visual migration */
+  --color-background: var(--color-asphalt-900);
+  --color-surface: var(--color-asphalt-700);
+  --color-surface-2: var(--color-asphalt-500);
+  --color-border: rgba(58, 55, 51, 0.45);
+  --color-text-main: var(--color-smoke-100);
+  --color-text-muted: var(--color-smoke-300);
+  --color-brand: var(--color-emergency);
+  --color-brand-muted: var(--color-emergency);
+  --color-success: var(--color-safe);
+}
+
+@layer base {
+  :root {
+    background-color: var(--color-asphalt-800);
+    color: var(--color-smoke-100);
+    font-family: var(--font-body);
+  }
+  
+  body {
+    @apply m-0 p-0 antialiased overflow-x-hidden bg-asphalt-800 text-smoke-100;
+    min-width: 320px;
+  }
+  
+  /* Focus rings for accessibility */
+  :focus-visible {
+    outline: 2px solid var(--color-emergency) !important;
+    outline-offset: 2px !important;
+  }
+
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer components {
+  /* Typography System */
+  .text-display-xl {
+    @apply font-display font-extrabold text-[72px] tracking-[-0.03em] leading-none uppercase;
+  }
+  .text-display-lg {
+    @apply font-display font-bold text-[48px] tracking-[-0.02em] leading-tight;
+  }
+  .text-display-md {
+    @apply font-display font-semibold text-[32px] tracking-[-0.01em] leading-tight;
+  }
+  .text-heading {
+    @apply font-body font-medium text-[18px] leading-snug;
+  }
+  .text-label {
+    @apply font-body font-medium text-[13px] tracking-[0.06em] uppercase;
+  }
+  .text-body {
+    @apply font-body font-normal text-[15px] leading-relaxed;
+  }
+  .text-caption {
+    @apply font-body font-normal text-[14px] text-smoke-300;
+  }
+  .text-coords {
+    @apply font-mono font-normal text-[13px];
+  }
+  .phone-number {
+    @apply font-mono text-[18px] tracking-[0.08em];
+  }
+
+  .service-card {
+    @apply relative min-h-[88px] overflow-hidden rounded-card border border-smoke-500/20 bg-asphalt-700 shadow-card transition duration-200 ease-out;
+  }
+
+  .service-card:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Structural & Interaction Utils */
+  .tap-target {
+    @apply min-h-[var(--spacing-touch)] min-w-[var(--spacing-touch)];
+  }
+  .btn-primary {
+    @apply min-h-[var(--spacing-touch)] min-w-[var(--spacing-touch)] bg-emergency text-smoke-100 rounded-sharp flex items-center justify-center transition-transform active:scale-95 shadow-glow-red font-body font-medium text-[13px] tracking-[0.06em] uppercase;
+  }
+  .btn-ghost {
+    @apply min-h-[var(--spacing-touch)] min-w-[var(--spacing-touch)] border border-smoke-500/30 text-smoke-100 rounded-sharp flex items-center justify-center transition-colors hover:bg-smoke-500/10 active:scale-95 font-body font-medium text-[13px] tracking-[0.06em] uppercase;
+  }
+
+  .bottom-fade {
+    mask-image: linear-gradient(to bottom, #000 84%, transparent 100%);
+  }
+}
+
+@layer utilities {
+  .animate-sos-pulse {
+    animation: sos-pulse-anim 1.8s ease-in-out infinite;
+  }
+
+  .pulse-ring {
+    animation: sos-pulse-anim 1.8s ease-in-out infinite;
+  }
+
+  .sos-pulse {
+    animation: button-heartbeat 2.2s ease-in-out infinite;
+  }
+
+  @keyframes button-heartbeat {
+    0%, 100% { box-shadow: var(--shadow-glow-red); }
+    50% { box-shadow: var(--shadow-glow-red-strong); }
+  }
+
+  .slide-up {
+    animation: slide-up 0.3s ease-out both;
+  }
+
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .glow-border {
+    box-shadow: var(--shadow-card);
+  }
+
+  .map-loading-grid {
+    background-color: var(--color-asphalt-800);
+    background-image:
+      linear-gradient(rgba(240,237,232,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(240,237,232,0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .animate-sos-pulse-fast {
+    animation: sos-pulse-anim 1.2s ease-in-out infinite;
+  }
+  @keyframes sos-pulse-anim {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.12); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .ambient-sos-glow {
+    animation: ambient-sos-glow-anim 3s infinite alternate;
+  }
+  @keyframes ambient-sos-glow-anim {
+    from { box-shadow: inset 0 0 30px rgba(92, 0, 0, 0.8); }
+    to { box-shadow: inset 0 0 80px rgba(180, 0, 0, 0.4); }
+  }
+
+  .shimmer-bg {
+    background: linear-gradient(90deg, var(--color-asphalt-700) 25%, var(--color-asphalt-600) 50%, var(--color-asphalt-700) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+  }
+  @keyframes shimmer {
+    to { background-position: -200% 0; }
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

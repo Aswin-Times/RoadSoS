@@ -1,0 +1,4 @@
+[
+  { "name": "high_g_speed_drop", "g_min": 3, "speed_drop_kmh": 40, "confidence": 0.85 },
+  { "name": "pothole_suppression", "g_min": 3, "speed_drop_kmh": 5, "confidence": 0.2 }
+]

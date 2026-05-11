@@ -1,0 +1,47 @@
+[
+  {
+    "id": "in-aiims-delhi",
+    "name": "AIIMS Trauma Centre",
+    "city": "New Delhi",
+    "address": "Ansari Nagar, New Delhi",
+    "lat": 28.5672,
+    "lng": 77.2100,
+    "phone": "+91 11265 88500",
+    "type": "government",
+    "specialisations": ["trauma", "neurosurgery", "icu"],
+    "has_icu": true,
+    "has_trauma": true,
+    "govt_or_private": "government",
+    "24h": true
+  },
+  {
+    "id": "in-apollo-chennai",
+    "name": "Apollo Hospitals Greams Road",
+    "city": "Chennai",
+    "address": "Greams Lane, Chennai",
+    "lat": 13.0635,
+    "lng": 80.2516,
+    "phone": "+91 44282 93333",
+    "type": "private",
+    "specialisations": ["trauma", "cardiac", "icu"],
+    "has_icu": true,
+    "has_trauma": true,
+    "govt_or_private": "private",
+    "24h": true
+  },
+  {
+    "id": "in-kem-mumbai",
+    "name": "KEM Hospital",
+    "city": "Mumbai",
+    "address": "Parel, Mumbai",
+    "lat": 19.0017,
+    "lng": 72.8416,
+    "phone": "+91 22241 07000",
+    "type": "government",
+    "specialisations": ["trauma", "orthopaedics", "icu"],
+    "has_icu": true,
+    "has_trauma": true,
+    "govt_or_private": "government",
+    "24h": true
+  }
+]

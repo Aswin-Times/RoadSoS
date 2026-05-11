@@ -1,0 +1,5 @@
+[
+  { "drug": "warfarin", "flag": "Bleeding risk elevated" },
+  { "drug": "aspirin", "flag": "Antiplatelet medication" },
+  { "drug": "insulin", "flag": "Check blood glucose if conscious" }
+]

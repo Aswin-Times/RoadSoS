@@ -1,0 +1,49 @@
+{
+  "banks": [
+    {
+      "id": "bb1",
+      "name": "Red Cross Blood Centre",
+      "city": "Delhi",
+      "lat": 28.6139,
+      "lng": 77.209,
+      "phone": "+91-11-23711551",
+      "inventory": { "A+": 15, "A-": 4, "B+": 22, "B-": 3, "O+": 18, "O-": 2, "AB+": 8, "AB-": 1, "platelets": 6 },
+      "lastUpdated": "2026-05-11T08:00:00Z"
+    },
+    {
+      "id": "bb2",
+      "name": "Fortis Blood Bank",
+      "city": "Delhi",
+      "lat": 28.5572,
+      "lng": 77.2098,
+      "phone": "+91-11-42776222",
+      "inventory": { "A+": 8, "A-": 2, "B+": 14, "B-": 1, "O+": 10, "O-": 0, "AB+": 3, "AB-": 0, "platelets": 4 },
+      "lastUpdated": "2026-05-11T07:30:00Z"
+    },
+    {
+      "id": "bb3",
+      "name": "AIIMS Blood Bank",
+      "city": "Delhi",
+      "lat": 28.5672,
+      "lng": 77.2067,
+      "phone": "+91-11-26588500",
+      "inventory": { "A+": 25, "A-": 6, "B+": 30, "B-": 5, "O+": 28, "O-": 4, "AB+": 12, "AB-": 2, "platelets": 10 },
+      "lastUpdated": "2026-05-11T09:00:00Z"
+    },
+    {
+      "id": "bb4",
+      "name": "Apollo Blood Centre",
+      "city": "Chennai",
+      "lat": 13.0604,
+      "lng": 80.2496,
+      "phone": "+91-44-28290200",
+      "inventory": { "A+": 10, "A-": 3, "B+": 16, "B-": 2, "O+": 12, "O-": 1, "AB+": 5, "AB-": 1, "platelets": 3 },
+      "lastUpdated": "2026-05-11T08:15:00Z"
+    }
+  ],
+  "apiEndpoints": {
+    "IN": "https://eraktkosh.mohfw.gov.in/BLDAHIMS/bloodbank/api",
+    "US": "https://www.redcrossblood.org/give.html/find-drive",
+    "UK": "https://www.blood.co.uk/api/v1"
+  }
+}

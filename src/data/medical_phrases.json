@@ -1,0 +1,124 @@
+{
+  "phrases": [
+    {
+      "en": "I've been in an accident",
+      "hi": "मेरा एक्सीडेंट हुआ है",
+      "de": "Ich hatte einen Unfall",
+      "de_phonetic": "ICH HA-teh EYE-nen OON-fal",
+      "fr": "J'ai eu un accident",
+      "fr_phonetic": "ZHAY oo uhn ak-see-DOHN",
+      "ja": "事故に遭いました",
+      "ja_phonetic": "JI-ko ni AI-mashta",
+      "es": "He tenido un accidente",
+      "es_phonetic": "Eh teh-NEE-doh oon ak-see-DEN-teh"
+    },
+    {
+      "en": "Call an ambulance",
+      "hi": "एम्बुलेंस बुलाइए",
+      "de": "Rufen Sie einen Krankenwagen",
+      "de_phonetic": "ROO-fen zee EYE-nen KRAN-ken-vah-gen",
+      "fr": "Appelez une ambulance",
+      "fr_phonetic": "ah-peh-LAY oon ahm-boo-LAHNSS",
+      "ja": "救急車を呼んでください",
+      "ja_phonetic": "kyu-kyu-SHA wo YON-deh koo-da-SAI",
+      "es": "Llame a una ambulancia",
+      "es_phonetic": "YAH-meh ah OO-nah am-boo-LAN-see-ah"
+    },
+    {
+      "en": "I'm in pain",
+      "hi": "मुझे दर्द हो रहा है",
+      "de": "Ich habe Schmerzen",
+      "de_phonetic": "ICH HA-beh SHMER-tsen",
+      "fr": "J'ai mal",
+      "fr_phonetic": "ZHAY mal",
+      "ja": "痛いです",
+      "ja_phonetic": "ee-TAI des",
+      "es": "Tengo dolor",
+      "es_phonetic": "TEN-go doh-LOR"
+    },
+    {
+      "en": "I can't move my legs",
+      "hi": "मैं अपने पैर नहीं हिला सकता",
+      "de": "Ich kann meine Beine nicht bewegen",
+      "de_phonetic": "ICH kann MY-neh BY-neh nisht beh-VAY-gen",
+      "fr": "Je ne peux pas bouger mes jambes",
+      "fr_phonetic": "ZHUH nuh PUH pah boo-ZHAY meh ZHAHM-b",
+      "ja": "足が動かせません",
+      "ja_phonetic": "ah-SHI ga oo-go-ka-SEH-ma-sen",
+      "es": "No puedo mover las piernas",
+      "es_phonetic": "no PWEH-doh mo-VEHR las pee-EHR-nas"
+    },
+    {
+      "en": "I'm bleeding heavily",
+      "hi": "बहुत खून बह रहा है",
+      "de": "Ich blute stark",
+      "de_phonetic": "ICH BLOO-teh shtark",
+      "fr": "Je saigne beaucoup",
+      "fr_phonetic": "ZHUH sen-yuh boh-KOO",
+      "ja": "大量に出血しています",
+      "ja_phonetic": "tai-RYO ni shuk-KET-su shi-teh ee-MAS",
+      "es": "Estoy sangrando mucho",
+      "es_phonetic": "es-TOY san-GRAN-doh MOO-cho"
+    },
+    {
+      "en": "I'm allergic to [medicine]",
+      "hi": "मुझे [दवा] से एलर्जी है",
+      "de": "Ich bin allergisch gegen [Medikament]",
+      "de_phonetic": "ICH bin ah-LER-gish GAY-gen [meh-dee-ka-MENT]",
+      "fr": "Je suis allergique au [médicament]",
+      "fr_phonetic": "ZHUH swee ah-lair-ZHEEK oh [may-dee-ka-MOHN]",
+      "ja": "[薬]にアレルギーがあります",
+      "ja_phonetic": "[kusuri] ni ah-reh-ru-GEE ga ah-ree-MAS",
+      "es": "Soy alérgico a [medicamento]",
+      "es_phonetic": "soy ah-LEHR-hee-ko ah [meh-dee-ka-MEN-to]"
+    },
+    {
+      "en": "My blood type is",
+      "hi": "मेरा ब्लड ग्रुप है",
+      "de": "Meine Blutgruppe ist",
+      "de_phonetic": "MY-neh BLOOT-groo-peh ist",
+      "fr": "Mon groupe sanguin est",
+      "fr_phonetic": "MOHN groop san-GAHN eh",
+      "ja": "私の血液型は",
+      "ja_phonetic": "wa-TA-shi no ket-su-EKI-gata wa",
+      "es": "Mi tipo de sangre es",
+      "es_phonetic": "mee TEE-po deh SAN-greh es"
+    },
+    {
+      "en": "I need a doctor",
+      "hi": "मुझे डॉक्टर चाहिए",
+      "de": "Ich brauche einen Arzt",
+      "de_phonetic": "ICH BROW-kheh EYE-nen artst",
+      "fr": "J'ai besoin d'un médecin",
+      "fr_phonetic": "ZHAY beh-ZWAHN duhn may-deh-SAHN",
+      "ja": "医者が必要です",
+      "ja_phonetic": "ee-SHA ga hit-su-YO des",
+      "es": "Necesito un doctor",
+      "es_phonetic": "neh-seh-SEE-to oon dok-TOR"
+    },
+    {
+      "en": "I have diabetes",
+      "hi": "मुझे शुगर/डायबिटीज है",
+      "de": "Ich habe Diabetes",
+      "de_phonetic": "ICH HA-beh dee-ah-BAY-tes",
+      "fr": "J'ai du diabète",
+      "fr_phonetic": "ZHAY doo dee-ah-BET",
+      "ja": "糖尿病があります",
+      "ja_phonetic": "to-NYO-byo ga ah-ree-MAS",
+      "es": "Tengo diabetes",
+      "es_phonetic": "TEN-go dee-ah-BEH-tes"
+    },
+    {
+      "en": "Where is the hospital?",
+      "hi": "अस्पताल कहाँ है?",
+      "de": "Wo ist das Krankenhaus?",
+      "de_phonetic": "VO ist das KRAN-ken-house",
+      "fr": "Où est l'hôpital?",
+      "fr_phonetic": "OO eh lo-pee-TAL",
+      "ja": "病院はどこですか?",
+      "ja_phonetic": "byo-IN wa DO-ko des-ka",
+      "es": "¿Dónde está el hospital?",
+      "es_phonetic": "DON-deh es-TAH el os-pee-TAL"
+    }
+  ]
+}

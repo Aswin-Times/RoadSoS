@@ -1,0 +1,81 @@
+{
+  "drugs": [
+    {
+      "name": "Paracetamol",
+      "category": "OTC",
+      "suspension": "250mg/5ml",
+      "dosePerKg": 15,
+      "maxDosePerKg": 60,
+      "unit": "mg",
+      "frequency": "every 4-6 hours",
+      "maxDailyDoses": 4,
+      "minAge": 0.25,
+      "notes": "Do not exceed 4 doses in 24 hours"
+    },
+    {
+      "name": "Ibuprofen",
+      "category": "OTC",
+      "suspension": "100mg/5ml",
+      "dosePerKg": 10,
+      "maxDosePerKg": 40,
+      "unit": "mg",
+      "frequency": "every 6-8 hours",
+      "maxDailyDoses": 3,
+      "minAge": 0.5,
+      "notes": "Give with food. Not for children under 6 months."
+    },
+    {
+      "name": "ORS (Oral Rehydration Salts)",
+      "category": "OTC",
+      "suspension": "1 sachet per 200ml water",
+      "dosePerKg": 10,
+      "maxDosePerKg": 100,
+      "unit": "ml",
+      "frequency": "after each loose stool",
+      "maxDailyDoses": 10,
+      "minAge": 0,
+      "notes": "Dissolve completely in clean water. Give sips frequently."
+    },
+    {
+      "name": "Cetirizine",
+      "category": "OTC",
+      "suspension": "5mg/5ml",
+      "dosePerKg": 0.25,
+      "maxDosePerKg": 0.5,
+      "unit": "mg",
+      "frequency": "once daily",
+      "maxDailyDoses": 1,
+      "minAge": 2,
+      "notes": "For allergic reactions. May cause drowsiness."
+    },
+    {
+      "name": "Ondansetron",
+      "category": "Rx",
+      "suspension": "4mg/5ml",
+      "dosePerKg": 0.15,
+      "maxDosePerKg": 0.45,
+      "unit": "mg",
+      "frequency": "every 8 hours",
+      "maxDailyDoses": 3,
+      "minAge": 0.5,
+      "notes": "For nausea/vomiting. Prescription required."
+    },
+    {
+      "name": "Amoxicillin",
+      "category": "Rx",
+      "suspension": "250mg/5ml",
+      "dosePerKg": 25,
+      "maxDosePerKg": 75,
+      "unit": "mg",
+      "frequency": "every 8 hours",
+      "maxDailyDoses": 3,
+      "minAge": 0,
+      "notes": "Antibiotic — doctor prescription required. Complete full course."
+    }
+  ],
+  "weightEstimate": {
+    "0.25": 5, "0.5": 7, "1": 10, "2": 12, "3": 14, "4": 16,
+    "5": 18, "6": 20, "7": 22, "8": 25, "9": 28, "10": 30,
+    "11": 35, "12": 40, "13": 45, "14": 50, "15": 55, "16": 60
+  }
+}
