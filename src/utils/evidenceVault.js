@@ -44,6 +44,18 @@ export async function sealEvidencePackage({ incidentId, location, motionHistory 
     hash: sealed.hash,
   })
   await writeTamperLog(incidentId, sealed)
+
+  try {
+    const res = await fetch('/api/evidence-backup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(sealed)
+    });
+    if (!res.ok) throw new Error('Upload failed');
+  } catch (err) {
+    await db.evidence_upload_queue.put(sealed);
+  }
+
   return sealed
 }
 

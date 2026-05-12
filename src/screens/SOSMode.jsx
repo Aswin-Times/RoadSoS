@@ -1,10 +1,13 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Phone, MessageCircle, MessageSquare, Copy, AlertTriangle, ShieldPlus, Activity, Navigation } from 'lucide-react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { useAppStore } from '../store/useAppStore'
 import { generateEmergencyMessage, shareViaWhatsApp, shareViaSMS, vibrateDevice } from '../utils/shareUtils'
+import { generateSosMessage } from '../utils/aiCopilot'
+import { useNearbyServices } from '../hooks/useNearbyServices'
 import emergencyNumbers from '../data/emergency-numbers.json'
+import { useToastStore } from '../store/useToastStore'
 
 export default function SOSMode() {
   const navigate = useNavigate()
@@ -14,6 +17,14 @@ export default function SOSMode() {
   const [countdown, setCountdown] = useState(3)
   const [isConfirmed, setIsConfirmed] = useState(false)
   const [elapsedTime, setElapsedTime] = useState(0)
+  const [isAlarmPlaying, setIsAlarmPlaying] = useState(false)
+  const [isPreAlerting, setIsPreAlerting] = useState(false)
+  
+  const audioContextRef = useRef(null)
+  const oscillatorRef = useRef(null)
+  
+  const { services } = useNearbyServices(5000)
+  const { addToast } = useToastStore()
 
   // Nearest mock hospital for demo
   const mockHospital = { name: "City Trauma Centre", distance: 1.2 }
@@ -52,13 +63,69 @@ export default function SOSMode() {
 
   const handleCancel = () => {
     cancelSos()
+    if (isAlarmPlaying) toggleAlarm()
     navigate('/')
+  }
+
+  const toggleAlarm = () => {
+    if (isAlarmPlaying) {
+      if (oscillatorRef.current) {
+        oscillatorRef.current.stop()
+        oscillatorRef.current.disconnect()
+        oscillatorRef.current = null
+      }
+      if (audioContextRef.current) {
+        audioContextRef.current.close()
+        audioContextRef.current = null
+      }
+      setIsAlarmPlaying(false)
+    } else {
+      vibrateDevice([100, 50, 100])
+      const ctx = new (window.AudioContext || window.webkitAudioContext)()
+      audioContextRef.current = ctx
+      const osc = ctx.createOscillator()
+      const gain = ctx.createGain()
+      osc.type = 'square'
+      osc.frequency.setValueAtTime(880, ctx.currentTime)
+      gain.gain.setValueAtTime(0.8, ctx.currentTime)
+      osc.connect(gain)
+      gain.connect(ctx.destination)
+      osc.start()
+      oscillatorRef.current = osc
+      setIsAlarmPlaying(true)
+    }
+  }
+
+  useEffect(() => {
+    return () => {
+      if (audioContextRef.current) {
+        audioContextRef.current.close()
+      }
+    }
+  }, [])
+
+  const handlePreAlert = async () => {
+    setIsPreAlerting(true)
+    const hospital = services.find(s => s.type === 'hospital')
+    if (!hospital) {
+      addToast({ message: "No hospital found nearby.", type: "error" })
+      setIsPreAlerting(false)
+      return
+    }
+    const preAlertMessage = generateSosMessage({ coords: location, nearestHospital: hospital, bloodGroup: 'Unknown' }) // Replace unknown if bloodGroup exists in store
+    if (hospital.phone) {
+      window.open(`sms:${hospital.phone}?body=${encodeURIComponent(preAlertMessage)}`)
+    } else {
+      navigator.clipboard.writeText(preAlertMessage)
+      addToast({ message: "No phone found. Message copied to clipboard.", type: "info" })
+    }
+    setIsPreAlerting(false)
   }
 
   const copyCoords = () => {
     if (location) {
       navigator.clipboard.writeText(`${location.lat}, ${location.lng}`)
-      alert("Coordinates copied")
+      addToast({ message: "Coordinates copied", type: "success" })
     }
   }
 
@@ -121,11 +188,11 @@ export default function SOSMode() {
                 <span className="text-label">Call {localNumbers.unified || localNumbers.ambulance}</span>
               </a>
               <button 
-                onClick={() => vibrateDevice([100, 50, 100])} 
-                className="flex min-h-[112px] flex-col items-center justify-center gap-2 rounded-card border border-smoke-500/20 bg-asphalt-700 p-4 transition-transform active:scale-95"
+                onClick={toggleAlarm} 
+                className={`flex min-h-[112px] flex-col items-center justify-center gap-2 rounded-card border border-smoke-500/20 p-4 transition-transform active:scale-95 ${isAlarmPlaying ? 'bg-emergency shadow-glow-red text-smoke-100' : 'bg-asphalt-700 text-smoke-100'}`}
               >
                 <ShieldPlus size={32} aria-hidden="true" />
-                <span className="text-label text-center">Sound Alarm</span>
+                <span className="text-label text-center">Sound Alarm {isAlarmPlaying ? '/ Stop' : ''}</span>
               </button>
             </div>
 
@@ -176,9 +243,9 @@ export default function SOSMode() {
             )}
             
             {/* Hospital Pre-Alert */}
-            <button className="btn-ghost mt-4 w-full gap-2 border-dashed border-emergency/40 text-emergency">
-              <Activity size={18} aria-hidden="true" />
-              Pre-alert Nearest Hospital
+            <button onClick={handlePreAlert} disabled={isPreAlerting} className="btn-ghost mt-4 w-full gap-2 border-dashed border-emergency/40 text-emergency">
+              {isPreAlerting ? <div className="animate-spin h-5 w-5 border-2 border-emergency border-t-transparent rounded-full" /> : <Activity size={18} aria-hidden="true" />}
+              {isPreAlerting ? 'Generating...' : 'Pre-alert Nearest Hospital'}
             </button>
           </motion.div>
         )}

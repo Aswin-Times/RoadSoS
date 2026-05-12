@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAppStore } from './store/useAppStore'
+import { db } from './store/db'
 
 // Screens
 import Home from './screens/Home'
@@ -23,6 +24,9 @@ import AppIntelligence from './components/shared/AppIntelligence'
 
 // Shared Components
 import SOSButton from './components/sos/SOSButton'
+import PinGate from './components/shared/PinGate'
+import ErrorBoundary from './components/shared/ErrorBoundary'
+import Toast from './components/shared/Toast'
 
 function App() {
   const { hasCompletedOnboarding, isDarkMode, setIsOnline } = useAppStore()
@@ -36,7 +40,24 @@ function App() {
     }
 
     // Network status listener
-    const handleOnline = () => setIsOnline(true)
+    const handleOnline = async () => {
+      setIsOnline(true)
+      try {
+        const queue = await db.evidence_upload_queue.toArray()
+        for (const item of queue) {
+          const res = await fetch('/api/evidence-backup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(item)
+          })
+          if (res.ok) {
+            await db.evidence_upload_queue.delete(item.id)
+          }
+        }
+      } catch (err) {
+        console.error('Failed to drain evidence queue', err)
+      }
+    }
     const handleOffline = () => setIsOnline(false)
 
     window.addEventListener('online', handleOnline)
@@ -52,23 +73,25 @@ function App() {
     <BrowserRouter>
       <div className="relative mx-auto min-h-screen max-w-md overflow-hidden border-x border-smoke-500/20 bg-asphalt-900 font-body text-smoke-100 shadow-2xl">
         <Routes>
-          <Route path="/" element={hasCompletedOnboarding ? <Home /> : <Navigate to="/onboarding" />} />
-          <Route path="/onboarding" element={!hasCompletedOnboarding ? <Onboarding /> : <Navigate to="/" />} />
-          <Route path="/sos" element={<SOSMode />} />
-          <Route path="/services" element={<NearbyServices />} />
-          <Route path="/first-aid" element={<FirstAid />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/medical-profile" element={<MedicalProfile />} />
-          <Route path="/incident-vault" element={<IncidentVault />} />
-          <Route path="/community" element={<CommunityHub />} />
+          <Route path="/" element={<ErrorBoundary>{hasCompletedOnboarding ? <Home /> : <Navigate to="/onboarding" />}</ErrorBoundary>} />
+          <Route path="/onboarding" element={<ErrorBoundary>{!hasCompletedOnboarding ? <Onboarding /> : <Navigate to="/" />}</ErrorBoundary>} />
+          <Route path="/sos" element={<ErrorBoundary><SOSMode /></ErrorBoundary>} />
+          <Route path="/services" element={<ErrorBoundary><NearbyServices /></ErrorBoundary>} />
+          <Route path="/first-aid" element={<ErrorBoundary><FirstAid /></ErrorBoundary>} />
+          <Route path="/settings" element={<ErrorBoundary><PinGate><Settings /></PinGate></ErrorBoundary>} />
+          <Route path="/medical-profile" element={<ErrorBoundary><PinGate><MedicalProfile /></PinGate></ErrorBoundary>} />
+          <Route path="/incident-vault" element={<ErrorBoundary><PinGate><IncidentVault /></PinGate></ErrorBoundary>} />
+          <Route path="/community" element={<ErrorBoundary><CommunityHub /></ErrorBoundary>} />
           {/* Layer 3 Screens */}
-          <Route path="/recovery" element={<RecoveryTimeline />} />
-          <Route path="/training" element={<TrainingAcademy />} />
-          <Route path="/trip-risk" element={<PreTripRisk />} />
-          <Route path="/blood-bank" element={<BloodBank />} />
-          <Route path="/vehicle" element={<VehicleDashboard />} />
+          <Route path="/recovery" element={<ErrorBoundary><RecoveryTimeline /></ErrorBoundary>} />
+          <Route path="/training" element={<ErrorBoundary><TrainingAcademy /></ErrorBoundary>} />
+          <Route path="/trip-risk" element={<ErrorBoundary><PreTripRisk /></ErrorBoundary>} />
+          <Route path="/blood-bank" element={<ErrorBoundary><PinGate><BloodBank /></PinGate></ErrorBoundary>} />
+          <Route path="/vehicle" element={<ErrorBoundary><VehicleDashboard /></ErrorBoundary>} />
         </Routes>
         
+        {/* Global Components */}
+        <Toast />
         {/* Global SOS Button (always visible unless in SOS mode or onboarding) */}
         {hasCompletedOnboarding && <SOSButton />}
         {hasCompletedOnboarding && <CrashSentinelOverlay />}

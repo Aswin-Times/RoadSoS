@@ -46,27 +46,16 @@ export function fallbackTriage(description = '') {
 }
 
 export async function runTriage(description) {
-  const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY
-  if (!apiKey) return fallbackTriage(description)
-
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('/api/triage', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
       },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 500,
-        system: TRIAGE_PROMPT,
-        messages: [{ role: 'user', content: description }],
-      }),
+      body: JSON.stringify({ description }),
     })
     if (!response.ok) throw new Error('AI unavailable')
-    const data = await response.json()
-    return JSON.parse(data.content?.[0]?.text || '{}')
+    return await response.json()
   } catch {
     return fallbackTriage(description)
   }

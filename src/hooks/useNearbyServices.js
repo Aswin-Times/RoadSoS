@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { db } from '../store/db'
 import { useAppStore } from '../store/useAppStore'
 
@@ -20,100 +20,97 @@ export function useNearbyServices(radius = 5000) {
   const [error, setError] = useState(null)
   const [usingCache, setUsingCache] = useState(false)
 
-  useEffect(() => {
-    if (!location) return
-
-    const fetchServices = async () => {
-      setLoading(true)
-      
-      // Load from cache first
-      try {
-        const cached = await db.nearbyServices.toArray()
-        if (cached.length > 0) {
-          // Filter by distance and sort
-          const updatedCache = cached.map(s => ({
-            ...s,
-            distance: calculateDistance(location.lat, location.lng, s.lat, s.lng).toFixed(1)
-          })).sort((a, b) => a.distance - b.distance)
-          
-          setServices(updatedCache)
-          setUsingCache(true)
-        }
-      } catch (e) {
-        console.error("Cache read error", e)
-      }
-
-      if (!isOnline) {
-        setLoading(false)
-        return
-      }
-
-      // Fetch from Overpass API
-      try {
-        // Build Overpass query: look for hospitals, clinics, police, fire stations
-        const query = `
-          [out:json][timeout:25];
-          (
-            node["amenity"="hospital"](around:${radius},${location.lat},${location.lng});
-            node["amenity"="clinic"](around:${radius},${location.lat},${location.lng});
-            node["amenity"="police"](around:${radius},${location.lat},${location.lng});
-            node["amenity"="fire_station"](around:${radius},${location.lat},${location.lng});
-            node["healthcare"="ambulance"](around:${radius},${location.lat},${location.lng});
-          );
-          out body;
-          >;
-          out skel qt;
-        `
-        
-        const response = await fetch('https://overpass-api.de/api/interpreter', {
-          method: 'POST',
-          body: query
+  const fetchApi = useCallback(async () => {
+    if (!location || !isOnline) return;
+    setLoading(true);
+    try {
+      const query = `
+        [out:json][timeout:25];
+        (
+          node["amenity"="hospital"](around:${radius},${location.lat},${location.lng});
+          node["amenity"="clinic"](around:${radius},${location.lat},${location.lng});
+          node["amenity"="police"](around:${radius},${location.lat},${location.lng});
+          node["amenity"="fire_station"](around:${radius},${location.lat},${location.lng});
+          node["healthcare"="ambulance"](around:${radius},${location.lat},${location.lng});
+        );
+        out body;
+        >;
+        out skel qt;
+      `;
+      const response = await fetch('https://overpass-api.de/api/interpreter', {
+        method: 'POST',
+        body: query
+      })
+      if (!response.ok) throw new Error("Network response was not ok")
+      const data = await response.json()
+      const parsedServices = data.elements
+        .filter(e => e.type === 'node' && e.tags)
+        .map(e => {
+          let type = 'other'
+          if (e.tags.amenity === 'hospital' || e.tags.amenity === 'clinic') type = 'hospital'
+          else if (e.tags.amenity === 'police') type = 'police'
+          else if (e.tags.amenity === 'fire_station' || e.tags.healthcare === 'ambulance') type = 'ambulance'
+          return {
+            id: e.id.toString(),
+            type,
+            name: e.tags.name || `${type.charAt(0).toUpperCase() + type.slice(1)} (Unknown Name)`,
+            lat: e.lat,
+            lng: e.lon,
+            phone: e.tags.phone || e.tags['contact:phone'] || null,
+            distance: calculateDistance(location.lat, location.lng, e.lat, e.lon).toFixed(1),
+            cached_at: Date.now(),
+            tags: e.tags
+          }
         })
-        
-        if (!response.ok) throw new Error("Network response was not ok")
-        
-        const data = await response.json()
-        
-        const parsedServices = data.elements
-          .filter(e => e.type === 'node' && e.tags)
-          .map(e => {
-            let type = 'other'
-            if (e.tags.amenity === 'hospital' || e.tags.amenity === 'clinic') type = 'hospital'
-            else if (e.tags.amenity === 'police') type = 'police'
-            else if (e.tags.amenity === 'fire_station' || e.tags.healthcare === 'ambulance') type = 'ambulance'
-            
-            return {
-              id: e.id.toString(),
-              type,
-              name: e.tags.name || `${type.charAt(0).toUpperCase() + type.slice(1)} (Unknown Name)`,
-              lat: e.lat,
-              lng: e.lon,
-              phone: e.tags.phone || e.tags['contact:phone'] || null,
-              distance: calculateDistance(location.lat, location.lng, e.lat, e.lon).toFixed(1),
-              cached_at: Date.now(),
-              tags: e.tags
-            }
-          })
-          .sort((a, b) => a.distance - b.distance)
-
-        setServices(parsedServices)
-        setUsingCache(false)
-        
-        // Update cache
-        await db.nearbyServices.clear()
-        await db.nearbyServices.bulkAdd(parsedServices)
-        
-      } catch (err) {
-        console.error("Overpass API error:", err)
-        setError(err.message)
-        // Keep using cache if API failed
-      } finally {
-        setLoading(false)
-      }
+        .sort((a, b) => a.distance - b.distance)
+      setServices(parsedServices)
+      setUsingCache(false)
+      await db.nearbyServices.clear()
+      await db.nearbyServices.bulkAdd(parsedServices)
+    } catch (err) {
+      console.error("Overpass API error:", err)
+      setError(err.message)
+    } finally {
+      setLoading(false)
     }
+  }, [location, isOnline, radius]);
 
-    fetchServices()
-  }, [location, isOnline, radius])
+  const loadFromCache = useCallback(async () => {
+    if (!location) return null;
+    try {
+      const cached = await db.nearbyServices.toArray();
+      if (cached.length > 0) {
+        const updatedCache = cached.map(s => ({
+          ...s,
+          distance: calculateDistance(location.lat, location.lng, s.lat, s.lng).toFixed(1)
+        })).sort((a, b) => a.distance - b.distance);
+        setServices(updatedCache);
+        setUsingCache(true);
+        const oldest = Math.min(...cached.map(s => s.cached_at || 0));
+        return { isStale: (Date.now() - oldest) > 5 * 60 * 1000 };
+      }
+    } catch (e) {
+      console.error("Cache error", e);
+    }
+    return { isStale: true };
+  }, [location]);
 
-  return { services, loading, error, usingCache }
+  useEffect(() => {
+    if (!location) return;
+    let timer;
+    loadFromCache().then(res => {
+      if (res?.isStale) {
+        timer = setTimeout(() => {
+          fetchApi();
+        }, 30000);
+      }
+    });
+    return () => clearTimeout(timer);
+  }, [location, loadFromCache, fetchApi]);
+
+  const refetch = useCallback(() => {
+    fetchApi();
+  }, [fetchApi]);
+
+  return { services, loading, error, usingCache, refetch }
 }

@@ -2,6 +2,10 @@ export const generateGoogleMapsLink = (lat, lng) => {
   return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
 }
 
+export const generateDirectionsLink = (lat, lng) => {
+  return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`
+}
+
 export const generateEmergencyMessage = (location, hospital) => {
   const mapsLink = generateGoogleMapsLink(location.lat, location.lng)
   return `EMERGENCY - I've been in a road accident. 

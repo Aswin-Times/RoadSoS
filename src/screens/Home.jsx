@@ -5,6 +5,7 @@ import MapView from '../components/map/MapView'
 import StatusBar from '../components/shared/StatusBar'
 import { useAppStore } from '../store/useAppStore'
 import { runTriage, generateSosMessage } from '../utils/aiCopilot'
+import { useNearbyServices } from '../hooks/useNearbyServices'
 
 export default function Home() {
   const navigate = useNavigate()
@@ -26,24 +27,35 @@ export default function Home() {
     { id: 'community', label: 'Community', icon: <Users size={24} />, color: 'text-safe', path: '/community' },
   ]
 
-  // Mock services for the map until we build the hook
-  const mockServices = location ? [
-    { id: 1, type: 'hospital', name: 'City Hospital', lat: location.lat + 0.005, lng: location.lng + 0.005, distance: 1.2 },
-    { id: 2, type: 'police', name: 'Central Police Station', lat: location.lat - 0.005, lng: location.lng - 0.002, distance: 0.8 },
-    { id: 3, type: 'ambulance', name: 'Rapid Response Unit', lat: location.lat + 0.002, lng: location.lng - 0.006, distance: 0.9 },
-  ] : []
+  const [locationStatus, setLocationStatus] = useState('pending')
+  const { services, loading, error } = useNearbyServices(5000)
 
   useEffect(() => {
-    // Attempt to get location if we don't have it
-    if (!location && 'geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation(position.coords.latitude, position.coords.longitude, position.coords.accuracy)
-        },
-        (error) => console.error("Location error:", error),
-        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-      )
+    if (location) {
+      setLocationStatus('granted')
+      return
     }
+    if (!('geolocation' in navigator)) {
+      setLocationStatus('unsupported')
+      return
+    }
+    
+    setLocationStatus('pending')
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLocationStatus('granted')
+        setLocation(position.coords.latitude, position.coords.longitude, position.coords.accuracy)
+      },
+      (error) => {
+        console.error("Location error:", error)
+        if (error.code === 1) {
+          setLocationStatus('denied')
+        } else {
+          setLocationStatus('denied')
+        }
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    )
   }, [location, setLocation])
 
   const submitTriage = async () => {
@@ -54,7 +66,7 @@ export default function Home() {
     setSosDraft(generateSosMessage({
       coords: location,
       injuryDesc: `${triage.urgency} ${triage.category}`,
-      nearestHospital: mockServices.find((service) => service.type === 'hospital'),
+      nearestHospital: services.find((service) => service.type === 'hospital'),
       bloodGroup,
       medicalSummary: medicalProfile.aiSummary,
     }))
@@ -87,7 +99,32 @@ export default function Home() {
 
       {/* Top Half: Map */}
       <div className="h-[45vh] relative z-0">
-        <MapView services={mockServices} />
+        {locationStatus === 'denied' || locationStatus === 'unsupported' ? (
+          <div className="flex h-full items-center justify-center bg-asphalt-800 px-4">
+            <div className="rounded-card border border-emergency/20 bg-asphalt-700 p-6 text-center shadow-lg">
+              <MapPin size={32} className="mx-auto mb-3 text-smoke-400" />
+              <p className="mb-4 text-sm text-smoke-300">
+                Location access denied. Enable it in your browser settings to find nearby services.
+              </p>
+              <button 
+                onClick={() => window.open('app-settings:')} 
+                className="btn-ghost mx-auto border border-brand-500 text-brand-500"
+              >
+                Open Settings
+              </button>
+            </div>
+          </div>
+        ) : (
+          <>
+            <MapView services={services} />
+            {locationStatus === 'pending' && (
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[350] flex items-center gap-2 rounded-full bg-asphalt-800/90 px-4 py-2 text-xs font-bold text-brand-400 shadow-lg backdrop-blur animate-pulse border border-brand-500/30">
+                <div className="h-2 w-2 rounded-full bg-brand-500 animate-ping" />
+                Waiting for location...
+              </div>
+            )}
+          </>
+        )}
         
         {/* Gradient Overlay for smooth transition */}
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-[300] h-16 bg-gradient-to-t from-asphalt-900 to-transparent"></div>
@@ -136,18 +173,38 @@ export default function Home() {
           </h2>
           
           <div className="flex flex-col gap-3">
-            {mockServices.map(service => (
-              <div key={service.id} className="service-card flex items-center justify-between p-card-pad">
-                <div className="absolute inset-y-0 left-0 w-1 bg-emergency" aria-hidden="true" />
-                <div>
-                  <h3 className="text-heading">{service.name}</h3>
-                  <p className="text-body capitalize text-smoke-300">{service.type}</p>
-                </div>
-                <div className="text-right">
-                  <div className="text-coords text-emergency">{service.distance.toFixed(1)} km</div>
-                </div>
+            {loading ? (
+              <>
+                <div className="h-20 w-full animate-pulse rounded-card bg-asphalt-700/50" />
+                <div className="h-20 w-full animate-pulse rounded-card bg-asphalt-700/50" />
+                <div className="h-20 w-full animate-pulse rounded-card bg-asphalt-700/50" />
+              </>
+            ) : error ? (
+              <div className="rounded-card border border-emergency/40 bg-emergency/10 p-4 text-emergency text-sm">
+                Failed to load nearby services. Displaying cached data if available.
               </div>
-            ))}
+            ) : !location ? (
+              <div className="rounded-card border border-warning/40 bg-warning/10 p-4 text-warning text-sm">
+                Location required to find nearby services.
+              </div>
+            ) : services.length === 0 ? (
+              <div className="rounded-card border border-smoke-500/40 bg-asphalt-700 p-4 text-smoke-300 text-sm">
+                No services found nearby.
+              </div>
+            ) : (
+              services.slice(0, 3).map(service => (
+                <div key={service.id} className="service-card flex items-center justify-between p-card-pad">
+                  <div className="absolute inset-y-0 left-0 w-1 bg-emergency" aria-hidden="true" />
+                  <div>
+                    <h3 className="text-heading">{service.name}</h3>
+                    <p className="text-body capitalize text-smoke-300">{service.type}</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-coords text-emergency">{service.distance} km</div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>

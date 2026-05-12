@@ -1,0 +1,49 @@
+{
+  "home": {
+    "describeIncident": "Describe what happened",
+    "quickActions": "Quick Actions",
+    "nearbyServices": "NEARBY SERVICES",
+    "viewAll": "View All",
+    "placeholder": "My leg is bent sideways..."
+  },
+  "settings": {
+    "title": "SETTINGS",
+    "personalInfo": "PERSONAL INFO",
+    "fullName": "Full Name",
+    "bloodGroup": "Blood Group",
+    "emergencyContacts": "EMERGENCY CONTACTS",
+    "preferences": "PREFERENCES",
+    "countryCode": "Country Code",
+    "darkMode": "Dark Mode",
+    "voiceEngine": "Voice Command Engine",
+    "tremorMode": "Tremor Mode",
+    "coreModules": "CORE MODULES",
+    "deepFeatures": "DEEP FEATURES — LAYER 3",
+    "systemInfo": "SYSTEM INFO",
+    "security": "SECURITY",
+    "lockAppNow": "Lock App Now",
+    "language": "Language"
+  },
+  "sos": {
+    "sending": "Sending SOS",
+    "cancel": "CANCEL",
+    "timeSince": "Time Since Incident",
+    "soundAlarm": "Sound Alarm",
+    "myLocation": "My Exact Location",
+    "acquiringGps": "Acquiring GPS lock...",
+    "preAlert": "Pre-alert Nearest Hospital"
+  },
+  "firstAid": {
+    "title": "First Aid"
+  },
+  "onboarding": {
+    "title1": "ROAD RESCUE",
+    "subtitle1": "Every second is the golden hour.",
+    "title2": "REAL-TIME AID",
+    "subtitle2": "Instant access to nearby hospitals, police, ambulances, and towing services when you need them most.",
+    "title3": "ENABLE LOCATION",
+    "subtitle3": "We need your location to find the nearest emergency services and send precise SOS alerts.",
+    "allowLocation": "Allow Location",
+    "skip": "Skip for now"
+  }
+}

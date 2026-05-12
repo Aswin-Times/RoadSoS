@@ -4,8 +4,8 @@ import { ArrowLeft, Navigation, Clock, ShieldCheck, Search, Filter, ChevronRight
 import { motion, useReducedMotion } from 'framer-motion'
 import StatusBar from '../components/shared/StatusBar'
 import { useNearbyServices } from '../hooks/useNearbyServices'
-import { generateGoogleMapsLink } from '../utils/shareUtils'
-import { cardItem, staggerContainer } from '../variants'
+import { generateDirectionsLink } from '../utils/shareUtils'
+import { cardItem, staggerContainer } from '../utils/variants'
 
 const serviceStyles = {
   hospital: { color: '#E8361A', bg: 'bg-emergency/10', text: 'text-emergency', icon: Hospital, label: 'Hospital' },
@@ -117,7 +117,7 @@ function ServiceCard({ service, reduceMotion }) {
           <span className="phone-number">{phoneLabel}</span>
         </a>
         <a
-          href={generateGoogleMapsLink(service.lat, service.lng)}
+          href={generateDirectionsLink(service.lat, service.lng)}
           target="_blank"
           rel="noreferrer"
           onClick={() => { if ('vibrate' in navigator) navigator.vibrate(50) }}

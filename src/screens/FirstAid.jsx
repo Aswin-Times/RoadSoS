@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { ArrowLeft, Volume2, CheckCircle2, Heart, Droplet, User, Bone } from 'lucide-react'
+import { ArrowLeft, Volume2, CheckCircle2, Heart, Droplet, User, Bone, Flame, AlertCircle, Activity, Brain, HeartPulse, UserMinus } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
 import StatusBar from '../components/shared/StatusBar'
 import firstAidData from '../data/first-aid-content.json'
@@ -27,6 +27,12 @@ export default function FirstAid() {
       case 'droplet': return <Droplet size={24} />
       case 'user': return <User size={24} />
       case 'bone': return <Bone size={24} />
+      case 'flame': return <Flame size={24} />
+      case 'alert-circle': return <AlertCircle size={24} />
+      case 'activity': return <Activity size={24} />
+      case 'brain': return <Brain size={24} />
+      case 'heart-pulse': return <HeartPulse size={24} />
+      case 'user-minus': return <UserMinus size={24} />
       default: return <Heart size={24} />
     }
   }

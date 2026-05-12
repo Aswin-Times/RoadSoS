@@ -32,7 +32,7 @@ function ChipInput({ label, values, onChange, placeholder }) {
 
 export default function MedicalProfile() {
   const navigate = useNavigate()
-  const { bloodGroup, setBloodGroup, medicalProfile, setMedicalProfile } = useAppStore()
+  const { userName, bloodGroup, setBloodGroup, medicalProfile, setMedicalProfile } = useAppStore()
   const [qr, setQr] = useState('')
 
   const summary = generateMedicalSummary({ bloodGroup, ...medicalProfile })
@@ -41,11 +41,17 @@ export default function MedicalProfile() {
     setMedicalProfile({ aiSummary: summary })
   }, [summary, setMedicalProfile])
 
-  const createShare = async () => {
-    const share = { id: `profile-${Date.now()}`, profile: { bloodGroup, ...medicalProfile, aiSummary: summary }, expiresAt: Date.now() + 24 * 60 * 60 * 1000 }
-    await db.profileShares.put(share)
-    const data = await QRCode.toDataURL(JSON.stringify({ id: share.id, expiresAt: share.expiresAt }))
-    setQr(data)
+  const generateQR = async () => {
+    const data = JSON.stringify({
+      name: userName,
+      bloodGroup,
+      allergies: medicalProfile.allergies,
+      medications: medicalProfile.medications,
+      conditions: medicalProfile.conditions,
+      nextOfKin: medicalProfile.nextOfKin
+    })
+    const url = await QRCode.toDataURL(data)
+    setQr(url)
   }
 
   return (
@@ -73,7 +79,7 @@ export default function MedicalProfile() {
           <span className="text-label text-smoke-300">Emergency Directive</span>
           <textarea value={medicalProfile.directive} onChange={(event) => setMedicalProfile({ directive: event.target.value })} className="mt-2 min-h-[96px] w-full rounded-card border border-smoke-500/25 bg-asphalt-700 p-3 text-body" placeholder="DNR, organ donor, or other directive" />
         </label>
-        <button onClick={createShare} className="btn-primary w-full gap-2"><QrCode size={18} /> Generate 24h QR Card</button>
+        <button onClick={generateQR} className="btn-primary w-full gap-2"><QrCode size={18} /> Generate QR ID</button>
         {qr && <img src={qr} alt="Temporary medical profile QR code" className="mx-auto h-44 w-44 rounded-card bg-smoke-100 p-3" />}
       </main>
     </div>

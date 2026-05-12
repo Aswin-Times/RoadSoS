@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from 'react-leaflet'
-import { LocateFixed, MapPin } from 'lucide-react'
+import { LocateFixed, MapPin, Navigation } from 'lucide-react'
 import L from 'leaflet'
 import { useAppStore } from '../../store/useAppStore'
 
@@ -137,7 +137,16 @@ export default function MapView({ services = [] }) {
             <Popup className="custom-popup">
               <div className="p-1 font-body text-black">
                 <h3 className="font-bold text-sm">{service.name}</h3>
-                <p className="text-xs text-gray-600">{service.distance}km away</p>
+                <p className="text-xs text-gray-600 mb-2">{service.distance}km away</p>
+                <a 
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${service.lat},${service.lng}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-1 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 px-3 py-1.5 rounded-md transition-colors"
+                >
+                  <Navigation size={12} />
+                  Directions
+                </a>
               </div>
             </Popup>
           </Marker>

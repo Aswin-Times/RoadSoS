@@ -4,43 +4,20 @@ import { ArrowLeft, MapPin, Plus, ShieldCheck, Star, AlertTriangle, Eye, Trendin
 import StatusBar from '../components/shared/StatusBar'
 import { useAppStore } from '../store/useAppStore'
 import { activeHazards, reportHazard } from '../utils/communityNetwork'
+import { useCommunityData } from '../hooks/useCommunityData'
 
 const hazardTypes = ['OilSlick', 'Pothole', 'Debris', 'Flood', 'FogPatch', 'AccidentScene']
-
-const mockBlackSpots = [
-  { id: 'bs1', location: 'NH-19 Mathura Bypass', incidents: 12, severity: 'critical', trend: 'rising' },
-  { id: 'bs2', location: 'Ring Road Sector 14', incidents: 7, severity: 'confirmed', trend: 'stable' },
-  { id: 'bs3', location: 'Old Delhi Station Crossing', incidents: 4, severity: 'emerging', trend: 'rising' },
-]
-
-const mockLeaderboard = [
-  { rank: 1, name: 'Anonymous Helper', responses: 28, badge: '🏆', training: 'CPR Certified' },
-  { rank: 2, name: 'Road Guardian', responses: 21, badge: '⭐', training: 'First Responder' },
-  { rank: 3, name: 'Safe Driver', responses: 15, badge: '🛡️', training: 'Basic Trained' },
-  { rank: 4, name: 'Night Watch', responses: 12, badge: '🩸', training: 'Blood Donor' },
-  { rank: 5, name: 'Community Hero', responses: 9, badge: '❤️', training: 'None' },
-]
-
-const mockPotholes = [
-  { id: 'p1', severity: 'high', location: 'MG Road near Metro', reports: 8, lastReported: '2h ago' },
-  { id: 'p2', severity: 'medium', location: 'Ring Road Flyover Exit', reports: 4, lastReported: '5h ago' },
-  { id: 'p3', severity: 'low', location: 'Sector 22 Market Road', reports: 2, lastReported: '1d ago' },
-]
 
 export default function CommunityHub() {
   const navigate = useNavigate()
   const { location } = useAppStore()
-  const [hazards, setHazards] = useState([])
+  const { hazards, blackSpots, potholes, leaderboard } = useCommunityData()
   const [selectedType, setSelectedType] = useState('Pothole')
   const [activeTab, setActiveTab] = useState('hazards')
   const [now] = useState(Date.now)
 
-  const refresh = () => activeHazards().then(setHazards)
-  useEffect(() => { refresh() }, [])
-
   const addHazard = async () => {
     await reportHazard({ type: selectedType, location })
-    refresh()
   }
 
   const severityColor = { critical: 'text-emergency', confirmed: 'text-warning', emerging: 'text-blue-400' }
@@ -125,7 +102,8 @@ export default function CommunityHub() {
               <div className="text-label text-emergency">Accident Black Spots</div>
               <p className="mt-1 text-caption">Areas with 3+ incidents in 90 days within 50m radius.</p>
             </section>
-            {mockBlackSpots.map(spot => (
+            {blackSpots.length === 0 && <p className="text-caption text-smoke-400">No black spots identified yet.</p>}
+            {blackSpots.map(spot => (
               <article key={spot.id} className={`rounded-card border p-card-pad ${severityBg[spot.severity]}`}>
                 <div className="flex items-start justify-between">
                   <div>
@@ -149,7 +127,8 @@ export default function CommunityHub() {
               <div className="text-label text-warning">Crowdsourced Pothole Map</div>
               <p className="mt-1 text-caption">Passively detected via accelerometer + user reports.</p>
             </section>
-            {mockPotholes.map(p => (
+            {potholes.length === 0 && <p className="text-caption text-smoke-400">No potholes reported yet.</p>}
+            {potholes.map(p => (
               <article key={p.id} className="service-card p-card-pad">
                 <div className="flex items-center justify-between">
                   <div>
@@ -170,7 +149,7 @@ export default function CommunityHub() {
               <div className="text-label text-safe">Responder Leaderboard</div>
               <p className="mt-1 text-caption">Anonymous heroes in your city. Badges verify their training level.</p>
             </section>
-            {mockLeaderboard.map(user => (
+            {leaderboard.map(user => (
               <article key={user.rank} className="service-card p-card-pad">
                 <div className="flex items-center gap-3">
                   <div className={`flex h-10 w-10 items-center justify-center rounded-full font-bold text-lg ${user.rank <= 3 ? 'bg-warning/20 text-warning' : 'bg-asphalt-400 text-smoke-300'}`}>

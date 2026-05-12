@@ -42,6 +42,8 @@ export const useAppStore = create(
       setVoiceOptIn: (status) => set({ voiceOptIn: status }),
       glanceMode: false,
       setGlanceMode: (status) => set({ glanceMode: status }),
+      motionPermissionGranted: null,
+      setMotionPermissionGranted: (val) => set({ motionPermissionGranted: val }),
       
       // Emergency Contacts
       emergencyContacts: [],
@@ -87,7 +89,8 @@ export const useAppStore = create(
         voiceOptIn: state.voiceOptIn,
         glanceMode: state.glanceMode,
         emergencyContacts: state.emergencyContacts,
-        countryCode: state.countryCode
+        countryCode: state.countryCode,
+        motionPermissionGranted: state.motionPermissionGranted
       })
     }
   )

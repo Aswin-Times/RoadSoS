@@ -4,6 +4,19 @@ const CRASH_G_THRESHOLD = 3.0
 const SPEED_DROP_THRESHOLD = 40
 const SPEED_DROP_TIME = 2000
 
+export const requestMotionPermission = async () => {
+  if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+    try {
+      const permissionState = await DeviceMotionEvent.requestPermission();
+      return permissionState === 'granted';
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
+  return true; // Auto-granted for non-iOS or older devices
+}
+
 export function useCrashSentinel({ enabled = true, onCrash }) {
   const motionHistory = useRef([])
   const speedHistory = useRef([])

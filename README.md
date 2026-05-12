@@ -62,7 +62,13 @@
    npm install
    ```
 
-3. **Run Development Server**
+3. **Set Environment Variables**
+   ```bash
+   cp .env.example .env
+   # Add your ANTHROPIC_API_KEY to the .env file
+   ```
+
+4. **Run Development Server**
    ```bash
    npm run dev
    ```

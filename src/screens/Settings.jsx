@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, User, Phone, Globe, Database, Plus, Trash2, HeartPulse, Archive, Users, Radio, Droplets, GraduationCap, Shield, Car, Clock, MapPin } from 'lucide-react'
+import { ArrowLeft, User, Phone, Globe, Database, Plus, Trash2, HeartPulse, Archive, Users, Radio, Droplets, GraduationCap, Shield, Car, Clock, MapPin, Lock } from 'lucide-react'
 import StatusBar from '../components/shared/StatusBar'
 import { useAppStore } from '../store/useAppStore'
 import { db } from '../store/db'
+import { useTranslation } from 'react-i18next'
 
 export default function Settings() {
   const navigate = useNavigate()
@@ -16,6 +17,8 @@ export default function Settings() {
     voiceOptIn, setVoiceOptIn,
     tremorMode, setTremorMode
   } = useAppStore()
+
+  const { t, i18n } = useTranslation()
 
   const [newContactName, setNewContactName] = useState('')
   const [newContactPhone, setNewContactPhone] = useState('')
@@ -167,6 +170,22 @@ export default function Settings() {
             
             <div className="flex items-center justify-between">
               <div>
+                <div className="font-bold text-sm">{t('settings.language', 'Language')}</div>
+                <div className="text-xs text-[var(--color-text-muted)]">Select your preferred language</div>
+              </div>
+              <select 
+                value={i18n.language.split('-')[0]}
+                onChange={(e) => i18n.changeLanguage(e.target.value)}
+                className="bg-[var(--color-background)] border border-[var(--color-border)] rounded-lg px-2 py-1 text-sm"
+              >
+                <option value="en">English</option>
+                <option value="hi">हिंदी (Hindi)</option>
+                <option value="ta">தமிழ் (Tamil)</option>
+              </select>
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div>
                 <div className="font-bold text-sm">Dark Mode</div>
                 <div className="text-xs text-[var(--color-text-muted)]">Recommended for battery saving</div>
               </div>
@@ -275,6 +294,22 @@ export default function Settings() {
               <span className="font-mono">3.0.0-layer3</span>
             </div>
           </div>
+        </section>
+
+        {/* Security Info */}
+        <section className="mb-8">
+          <h2 className="text-sm font-bold text-[var(--color-text-muted)] mb-3 flex items-center gap-2">
+            <Lock size={16} /> SECURITY
+          </h2>
+          <button 
+            onClick={() => {
+              localStorage.removeItem('last_active_time')
+              window.location.reload()
+            }}
+            className="w-full bg-[var(--color-surface)] border border-emergency rounded-2xl p-4 text-emergency font-bold"
+          >
+            Lock App Now
+          </button>
         </section>
 
       </div>

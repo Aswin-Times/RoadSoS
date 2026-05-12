@@ -1,17 +1,39 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { AlertTriangle } from 'lucide-react'
-import { useCrashSentinel } from '../../hooks/useCrashSentinel'
+import { useCrashSentinel, requestMotionPermission } from '../../hooks/useCrashSentinel'
 import { useAppStore } from '../../store/useAppStore'
 import { sealEvidencePackage } from '../../utils/evidenceVault'
 
 export default function CrashSentinelOverlay() {
   const navigate = useNavigate()
   const route = useLocation()
-  const { location, triggerSos, setTremorMode, isSosActive } = useAppStore()
+  const { location, triggerSos, setTremorMode, isSosActive, motionPermissionGranted, setMotionPermissionGranted } = useAppStore()
   const [crash, setCrash] = useState(null)
   const [countdown, setCountdown] = useState(10)
+  const [showPrompt, setShowPrompt] = useState(false)
   const audioRef = useRef(null)
+
+  useEffect(() => {
+    if (motionPermissionGranted === null && route.pathname !== '/onboarding') {
+      if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+        setShowPrompt(true)
+      } else {
+        setMotionPermissionGranted(true)
+      }
+    }
+  }, [motionPermissionGranted, setMotionPermissionGranted, route.pathname])
+
+  const handleAllow = async () => {
+    const granted = await requestMotionPermission()
+    setMotionPermissionGranted(granted)
+    setShowPrompt(false)
+  }
+
+  const handleDeny = () => {
+    setMotionPermissionGranted(false)
+    setShowPrompt(false)
+  }
 
   const onCrash = useCallback((payload) => {
     setCrash(payload)
@@ -20,7 +42,7 @@ export default function CrashSentinelOverlay() {
     if ('vibrate' in navigator) navigator.vibrate([500, 200, 500, 200, 500])
   }, [setTremorMode])
 
-  useCrashSentinel({ enabled: !isSosActive && route.pathname !== '/onboarding', onCrash })
+  useCrashSentinel({ enabled: motionPermissionGranted === true && !isSosActive && route.pathname !== '/onboarding', onCrash })
 
   useEffect(() => {
     if (!crash) return undefined
@@ -61,6 +83,24 @@ export default function CrashSentinelOverlay() {
     setCrash(null)
     setTremorMode(false)
     audioRef.current?.close?.()
+  }
+
+  if (showPrompt) {
+    return (
+      <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
+        <div className="rounded-card border border-brand-500/20 bg-asphalt-800 p-6 text-center text-smoke-100 shadow-2xl">
+          <AlertTriangle size={48} className="mx-auto mb-4 text-brand-400" />
+          <h2 className="mb-2 text-xl font-bold">Enable crash detection?</h2>
+          <p className="mb-6 text-sm text-smoke-300">
+            Road Rescue needs motion sensor access to automatically detect accidents and send SOS.
+          </p>
+          <div className="flex gap-3">
+            <button onClick={handleDeny} className="btn-ghost flex-1 border-smoke-600">Not Now</button>
+            <button onClick={handleAllow} className="btn-primary flex-1 bg-brand-600">Allow</button>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   if (!crash) return null

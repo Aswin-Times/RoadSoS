@@ -10,8 +10,10 @@
           { "time": "0:05", "text": "Check response: Shake shoulders and shout 'Are you okay?'" },
           { "time": "0:10", "text": "If no response, tilt head back and lift chin to open airway." },
           { "time": "0:10", "text": "Check breathing: Look, listen, and feel for normal breathing for 10 seconds." },
-          { "time": "0:05", "text": "If NOT breathing normally, call emergency services immediately." },
-          { "time": "Ongoing", "text": "Start CPR: Place hands in center of chest. Push hard and fast (100-120 beats/min, 2 inches deep)." }
+          { "time": "0:05", "text": "If NOT breathing normally, call emergency services immediately and fetch an AED if available." },
+          { "time": "Ongoing", "text": "Start CPR: Place the heel of one hand in the center of the chest, other hand on top. Push hard and fast (100-120 compressions/min, 2-2.4 inches deep). Allow full chest recoil." },
+          { "time": "Ongoing", "text": "If trained, give 2 rescue breaths after every 30 compressions. If untrained, stick to Hands-Only CPR." },
+          { "time": "As AED arrives", "text": "Turn on AED and follow voice prompts. Do not touch the person while the AED is analyzing or shocking." }
         ]
       },
       {
@@ -20,10 +22,13 @@
         "icon": "droplet",
         "color": "#EF4444",
         "steps": [
-          { "time": "0:05", "text": "Apply direct pressure to the wound using a clean cloth or hands." },
-          { "time": "Ongoing", "text": "Maintain pressure constantly. Do NOT remove the cloth if it soaks through; add more layers." },
-          { "time": "0:15", "text": "If bleeding is from a limb, elevate it above the heart if possible." },
-          { "time": "0:30", "text": "If bleeding doesn't stop, apply a tourniquet 2-3 inches above the wound (not on a joint)." }
+          { "time": "0:05", "text": "Ensure your own safety. Put on gloves if available." },
+          { "time": "0:05", "text": "Find the source of the bleeding. Expose the wound if necessary." },
+          { "time": "Ongoing", "text": "Apply firm, direct pressure to the wound using a clean cloth, sterile dressing, or hands." },
+          { "time": "Ongoing", "text": "Maintain pressure constantly. Do NOT remove the cloth if it soaks through; add more layers on top." },
+          { "time": "0:15", "text": "If bleeding is from an arm or leg, elevate the injured limb above the level of the heart if possible." },
+          { "time": "0:30", "text": "If life-threatening bleeding doesn't stop, apply a tourniquet 2-3 inches above the wound (not on a joint). Note the time it was applied." },
+          { "time": "Ongoing", "text": "Keep the victim warm to prevent shock and wait for emergency services." }
         ]
       },
       {
@@ -33,9 +38,10 @@
         "color": "#3B82F6",
         "steps": [
           { "time": "0:10", "text": "Ensure the person is breathing normally." },
-          { "time": "0:30", "text": "Place them in the Recovery Position: roll them onto their side, support head, bend top leg." },
-          { "time": "0:05", "text": "Call emergency services." },
-          { "time": "Ongoing", "text": "Monitor breathing constantly until help arrives." }
+          { "time": "0:30", "text": "Place them in the Recovery Position: kneel beside them, straighten their legs, place the arm nearest to you at a right angle, bring the far arm across their chest, and pull the far knee up. Roll them towards you onto their side." },
+          { "time": "0:05", "text": "Tilt their head back slightly to keep the airway open." },
+          { "time": "0:05", "text": "Call emergency services immediately." },
+          { "time": "Ongoing", "text": "Monitor breathing constantly until help arrives. Do NOT give them anything to eat or drink." }
         ]
       },
       {
@@ -44,10 +50,104 @@
         "icon": "bone",
         "color": "#F59E0B",
         "steps": [
-          { "time": "0:05", "text": "Do NOT move the injured person unless they are in immediate danger." },
-          { "time": "0:30", "text": "Immobilize the injured area. Use a splint if trained, otherwise keep it supported." },
-          { "time": "0:15", "text": "Apply a cold pack wrapped in cloth to reduce swelling." },
-          { "time": "0:05", "text": "Call for medical help." }
+          { "time": "0:05", "text": "Do NOT move the injured person unless they are in immediate danger. Moving them can worsen the injury." },
+          { "time": "0:10", "text": "Control any bleeding by applying pressure to the edges of the wound, avoiding the exposed bone." },
+          { "time": "0:30", "text": "Immobilize the injured area. Use a splint (rolled up newspaper, umbrella, piece of wood) padded with clothing if trained, otherwise keep it supported in the position found." },
+          { "time": "0:15", "text": "Apply a cold pack wrapped in a cloth to the injured area to reduce swelling and pain." },
+          { "time": "0:05", "text": "Call for medical help or arrange transport to a hospital." },
+          { "time": "Ongoing", "text": "Treat for shock: keep them calm, warm, and lying down (if the injury allows)." }
+        ]
+      },
+      {
+        "id": "burns",
+        "title": "Burns & Scalds",
+        "icon": "flame",
+        "color": "#F97316",
+        "steps": [
+          { "time": "0:05", "text": "Stop the burning process: remove the person from the source, extinguish flames (Stop, Drop, and Roll)." },
+          { "time": "20:00", "text": "Cool the burn immediately with cool (not freezing cold) running water for at least 20 minutes." },
+          { "time": "0:15", "text": "Remove constricting items like jewelry, belts, or tight clothing near the burn before swelling begins. Do NOT remove clothing stuck to the burn." },
+          { "time": "0:10", "text": "Cover the burn loosely with sterile, non-fluffy dressing, or cling film (Saran wrap)." },
+          { "time": "Ongoing", "text": "Do NOT apply ice, butter, ointments, or pop blisters. Seek medical help for severe or large burns." }
+        ]
+      },
+      {
+        "id": "choking",
+        "title": "Choking",
+        "icon": "alert-circle",
+        "color": "#8B5CF6",
+        "steps": [
+          { "time": "0:05", "text": "Ask 'Are you choking?' If they can cough, encourage them to keep coughing." },
+          { "time": "0:10", "text": "If they cannot cough, breathe, or speak, support their chest and lean them forward." },
+          { "time": "0:15", "text": "Give up to 5 sharp back blows between the shoulder blades using the heel of your hand." },
+          { "time": "0:15", "text": "If unsuccessful, give up to 5 abdominal thrusts (Heimlich maneuver): stand behind, wrap arms around waist, make a fist above the navel, grab fist with the other hand, pull inward and upward." },
+          { "time": "Ongoing", "text": "Alternate 5 back blows and 5 abdominal thrusts until the object is dislodged. If they become unconscious, start CPR." }
+        ]
+      },
+      {
+        "id": "shock",
+        "title": "Medical Shock",
+        "icon": "activity",
+        "color": "#14B8A6",
+        "steps": [
+          { "time": "0:05", "text": "Recognize signs: pale/cold/clammy skin, rapid/weak pulse, fast/shallow breathing, confusion." },
+          { "time": "0:10", "text": "Lay the person down flat on their back. Elevate their legs about 12 inches unless it causes pain or a spinal injury is suspected." },
+          { "time": "0:05", "text": "Call emergency services immediately. Shock is life-threatening." },
+          { "time": "Ongoing", "text": "Keep the person warm with a blanket or coat. Do NOT give them food or drink." },
+          { "time": "Ongoing", "text": "Reassure them, loosen tight clothing, and monitor breathing. Be ready to start CPR if breathing stops." }
+        ]
+      },
+      {
+        "id": "stroke",
+        "title": "Stroke (FAST)",
+        "icon": "brain",
+        "color": "#A855F7",
+        "steps": [
+          { "time": "0:05", "text": "Face: Ask them to smile. Does one side of the face droop?" },
+          { "time": "0:05", "text": "Arms: Ask them to raise both arms. Does one arm drift downward?" },
+          { "time": "0:05", "text": "Speech: Ask them to repeat a simple phrase. Is their speech slurred or strange?" },
+          { "time": "0:05", "text": "Time: If you observe any of these signs, call emergency services immediately and note the time the symptoms started." },
+          { "time": "Ongoing", "text": "Keep them calm and resting. Do NOT give them food, drink, or medication (not even aspirin)." }
+        ]
+      },
+      {
+        "id": "heart_attack",
+        "title": "Heart Attack",
+        "icon": "heart-pulse",
+        "color": "#DC2626",
+        "steps": [
+          { "time": "0:05", "text": "Recognize signs: severe chest pain/pressure spreading to arms, neck, jaw, or back; shortness of breath; sweating." },
+          { "time": "0:05", "text": "Call emergency services immediately." },
+          { "time": "0:10", "text": "Have the person sit down, rest, and keep calm. Loosen tight clothing." },
+          { "time": "0:10", "text": "If they are prescribed angina medication (like nitroglycerin), help them take it." },
+          { "time": "0:05", "text": "If they are fully conscious and not allergic, offer them a regular adult aspirin (300mg) to chew slowly." },
+          { "time": "Ongoing", "text": "Monitor constantly. Be prepared to start CPR if they lose consciousness and stop breathing." }
+        ]
+      },
+      {
+        "id": "seizure",
+        "title": "Seizures / Epilepsy",
+        "icon": "activity",
+        "color": "#EC4899",
+        "steps": [
+          { "time": "0:05", "text": "Do NOT try to restrain the person or stop their movements." },
+          { "time": "0:10", "text": "Protect them from injury: clear the area of hard or sharp objects, place something soft (like a jacket) under their head." },
+          { "time": "0:05", "text": "Do NOT put anything in their mouth." },
+          { "time": "Ongoing", "text": "Time the seizure. If it lasts longer than 5 minutes, call an ambulance." },
+          { "time": "Afterward", "text": "Once the seizure stops, roll them into the recovery position, check breathing, and reassure them as they recover." }
+        ]
+      },
+      {
+        "id": "spinal_injury",
+        "title": "Head or Spinal Injury",
+        "icon": "user-minus",
+        "color": "#6B7280",
+        "steps": [
+          { "time": "0:05", "text": "Suspect a spinal injury if there's a serious fall, vehicle accident, or head trauma." },
+          { "time": "0:05", "text": "Call emergency services immediately." },
+          { "time": "Ongoing", "text": "Do NOT move the person unless there is immediate life-threatening danger (e.g., fire)." },
+          { "time": "Ongoing", "text": "Keep the person's head, neck, and spine perfectly aligned. Hold their head still with your hands on both sides of their ears to prevent movement." },
+          { "time": "Ongoing", "text": "If you must open the airway, use the jaw-thrust maneuver instead of tilting the head back." }
         ]
       }
     ]
